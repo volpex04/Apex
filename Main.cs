@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace [your name]
+namespace ColorBotWinForms
 {
     public partial class Form1 : Form
     {
@@ -56,9 +56,9 @@ namespace [your name]
                 "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
             });
             cmbHotkey.SelectedIndex = 1; // default M5
-            cmbHotkey.SelectedIndexChanged += (s,e) =>
+            cmbHotkey.SelectedIndexChanged += (s, e) =>
             {
-                switch(cmbHotkey.SelectedItem.ToString())
+                switch (cmbHotkey.SelectedItem.ToString())
                 {
                     case "XButton1 (M4)": bot.Hotkey = Keys.XButton1; break;
                     case "XButton2 (M5)": bot.Hotkey = Keys.XButton2; break;
@@ -80,7 +80,7 @@ namespace [your name]
             // Timer to refresh FOV circle
             Timer refreshTimer = new Timer();
             refreshTimer.Interval = 30; // ~33 FPS
-            refreshTimer.Tick += (s,e) => this.Invalidate();
+            refreshTimer.Tick += (s, e) => this.Invalidate();
             refreshTimer.Start();
         }
 
@@ -110,10 +110,13 @@ namespace [your name]
 
             using (Pen pen = new Pen(Color.White, 2))
             {
-                Point center = Cursor.Position;
+                // Center of the screen instead of cursor
+                int screenCenterX = Screen.PrimaryScreen.Bounds.Width / 2;
+                int screenCenterY = Screen.PrimaryScreen.Bounds.Height / 2;
+
                 e.Graphics.DrawEllipse(pen,
-                    center.X - bot.FOVRadius,
-                    center.Y - bot.FOVRadius,
+                    screenCenterX - bot.FOVRadius,
+                    screenCenterY - bot.FOVRadius,
                     bot.FOVRadius * 2,
                     bot.FOVRadius * 2);
             }
